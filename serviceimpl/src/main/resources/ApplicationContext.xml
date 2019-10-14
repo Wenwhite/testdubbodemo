@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd ">
+
+
+    <context:component-scan base-package="team.wenwhite" />
+
+    <!-- 使用dubbo的另外一个原因 可以和Spring无缝衔接 -->
+    <!-- 目的：
+            找到注册中心，告诉它我是谁，我的端口是多少
+     -->
+    <!-- 1.配置别名 目的是在后台可以看到这个服务的别名 好区分到底是谁 这个参数可以随便写 但是最好是见其名知其意-->
+    <dubbo:application name="test1"/>
+
+    <!-- 2.配置注册中心
+        address: 注册中心地址
+        protocol:注册中心的协议模式
+     -->
+    <dubbo:registry address="139.159.232.41:2181" protocol="zookeeper" />
+
+    <!--
+        告诉注册中心我是谁
+        interface代表类型
+        ref代表具体发布哪项服务
+        timeout代表连接超时时间
+    -->
+    <dubbo:service interface="team.wenwhite.testdubbo.TestService" ref="testServiceImpl" timeout="5000" />
+
+    <!--
+        配置我的端口，因为消费者想要连接我们，必须得通过我们的IP和端口进行访问
+        我们在连接注册中心的时候IP就已经被获取了，但是这个服务的端口并不知道，所以需要设置这个服务的端口
+        端口可以随便写 但是不可以被占用，一个dubbo对外发布的时候必须独占一个端口
+    -->
+
+    <dubbo:protocol name="dubbo" port="12345" />
+
+
+
+</beans>
