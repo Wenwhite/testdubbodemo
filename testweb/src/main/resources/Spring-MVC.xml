@@ -23,8 +23,9 @@
     <dubbo:application name="xiaofeizhe" />
     <!--
         2.配置注册中心
+        address zookeeper的服务器IP地址和端口号
     -->
-    <dubbo:registry address="139.159.232.41:2181" protocol="zookeeper" />
+    <dubbo:registry address="***.***.***.**:****" protocol="zookeeper" />
     <!--
         3.告诉它我需要什么
         id 不写的话可能会出问题

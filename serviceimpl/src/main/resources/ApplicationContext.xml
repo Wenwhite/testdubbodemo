@@ -23,10 +23,10 @@
     <dubbo:application name="test1"/>
 
     <!-- 2.配置注册中心
-        address: 注册中心地址
+        address: 注册中心地址+端口号
         protocol:注册中心的协议模式
      -->
-    <dubbo:registry address="139.159.232.41:2181" protocol="zookeeper" />
+    <dubbo:registry address="***.***.***.**:****" protocol="zookeeper" />
 
     <!--
         告诉注册中心我是谁
